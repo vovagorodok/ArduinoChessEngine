@@ -1,0 +1,49 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.1.1 Chrome/132.0.6834.210 Electron/34.3.3 Safari/537.36">
+  <diagram id="F4xZrkDKdXFZ0WBlKVA5" name="Page-1">
+    <mxGraphModel dx="1071" dy="658" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-11" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;fontColor=default;strokeColor=#1C8CCE;" target="FeTq6d7acPr-5DLkcB4m-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-12" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;fontColor=default;strokeColor=#1C8CCE;" target="FeTq6d7acPr-5DLkcB4m-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;3&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;-Inf to 3&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;+inf&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="360" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-13" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;strokeColor=#1C8CCE;" target="FeTq6d7acPr-5DLkcB4m-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-14" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;strokeColor=#1C8CCE;" target="FeTq6d7acPr-5DLkcB4m-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;-3&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;-Inf to -3&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;+inf&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="200" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;3&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;-Inf&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;+inf&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;12&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;-Inf&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="280" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-17" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;strokeColor=#1C8CCE;" target="FeTq6d7acPr-5DLkcB4m-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-18" edge="1" parent="1" source="FeTq6d7acPr-5DLkcB4m-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;strokeColor=#1C8CCE;dashed=1;" target="FeTq6d7acPr-5DLkcB4m-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;-2&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;-Inf to -2&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;-3&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="520" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;" value="Weight: &lt;b&gt;2&lt;/b&gt;&lt;br&gt;Alpha: &lt;b&gt;3&lt;/b&gt;&lt;br&gt;Beta: &lt;b&gt;+inf&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="440" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="FeTq6d7acPr-5DLkcB4m-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;strokeColor=#1C8CCE;fillColor=none;fontColor=#1C8CCE;dashed=1;" value="Cut off" vertex="1">
+          <mxGeometry height="60" width="120" x="600" y="320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

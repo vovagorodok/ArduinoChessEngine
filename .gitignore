@@ -1,0 +1,8 @@
+.pio
+.vscode
+*.ino.cpp
+
+# draw.io
+*.drawio.bkp
+*.drawio.dtmp
+*.svg.bkp

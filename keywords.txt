@@ -1,0 +1,45 @@
+# Datatypes (KEYWORD1)
+ArduinoChessEngine	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+undo	KEYWORD2
+find	KEYWORD2
+make	KEYWORD2
+solve	KEYWORD2
+stop	KEYWORD2
+getTurn	KEYWORD2
+getCastlingAbilities	KEYWORD2
+getEnPassant	KEYWORD2
+getHalfMove	KEYWORD2
+getFullMove	KEYWORD2
+getRoundStatus	KEYWORD2
+getCheck	KEYWORD2
+getLastMove	KEYWORD2
+getBoard	KEYWORD2
+isWhiteTurn	KEYWORD2
+isBlackTurn	KEYWORD2
+isNormal	KEYWORD2
+isCheck	KEYWORD2
+isCheckmate	KEYWORD2
+isStalemate	KEYWORD2
+isDeadPosition	KEYWORD2
+isFiftyMove	KEYWORD2
+isThreefoldRepetition	KEYWORD2
+isStopped	KEYWORD2
+isInvalid	KEYWORD2
+isDraw	KEYWORD2
+isEnd	KEYWORD2
+getOptions	KEYWORD2
+setOptions	KEYWORD2
+getTimeLimit	KEYWORD2
+setTimeLimit	KEYWORD2
+setCyclicPull	KEYWORD2
+setMultiTask	KEYWORD2
+solveMoves	KEYWORD2
+createMoves	KEYWORD2
+createFen	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)

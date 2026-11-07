@@ -1,0 +1,31 @@
+{
+    "name": "ArduinoChessEngine",
+    "version": "0.0.0",
+    "description": "Chess engine for Arduino",
+    "keywords": "chess, engine",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/vovagorodok/ArduinoChessEngine"
+    },
+    "authors":
+    [
+      {
+        "name": "vovagorodok",
+        "email": "vovagorodok2@gmail.com",
+        "url": "https://github.com/vovagorodok",
+        "maintainer": true
+      },
+      {
+        "name": "dkwach",
+        "email": "dawid.kwach@gmail.com",
+        "url": "https://github.com/dkwach",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/vovagorodok/ArduinoChessEngine",
+    "headers": ["ArduinoChessEngine.h"],
+    "frameworks": "arduino",
+    "platforms": ["*"]
+  }
