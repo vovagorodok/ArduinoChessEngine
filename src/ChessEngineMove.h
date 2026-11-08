@@ -33,7 +33,7 @@ struct Move {
         weight() {}
     static constexpr Move none() { return Move{}; }
 
-    static inline Move fromUci(const String& uci) {
+    static Move fromUci(const String& uci) {
         if (uci.length() < 4) {
             return Move::none();
         }
@@ -49,7 +49,7 @@ struct Move {
         return move;
     }
 
-    inline String toUci() {
+    String toUci() const {
         String str = convertPositionsToStr(positions);
         if (isPromotion()) {
             str += convertPieceKindToChar(convertMoveTypeToPieceKind(type));

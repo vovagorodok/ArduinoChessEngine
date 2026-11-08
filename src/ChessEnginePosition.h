@@ -18,7 +18,7 @@ class Position {
     constexpr bool isNone() const { return value == NONE_VALUE; }
     constexpr operator ValueType() const { return value; }
 
-    static inline Position fromStr(const String& str) {
+    static Position fromStr(const String& str) {
         if (str.length() < 2) {
             return Position::none();
         }
@@ -31,7 +31,7 @@ class Position {
                BOARD_SQUARES_NUM * (BOARD_SQUARES_NUM - convertCharToSquareNumber(rank));
     }
 
-    inline String toStr() {
+    String toStr() const {
         if (isNone()) {
             return "_";
         }
