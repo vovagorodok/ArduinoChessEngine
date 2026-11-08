@@ -6,18 +6,18 @@ namespace ChessEngine {
 namespace {
 #define TAG "Engine"
 
-#ifndef CHESS_ENGINE_MAP_CVALIFIER
-#define CHESS_ENGINE_MAP_CVALIFIER constexpr
+#ifndef CHESS_ENGINE_MAP_QUALIFIER
+#define CHESS_ENGINE_MAP_QUALIFIER constexpr
 #endif
 
 constexpr uint8_t WHITE_PROMOTION_ROW = 8;
 constexpr uint8_t BLACK_PROMOTION_ROW = 1;
 constexpr uint8_t SINGLE_PAWN_MOVE = BOARD_SQUARES_NUM;
 constexpr uint8_t DOUBLE_PAWN_MOVE = 2 * SINGLE_PAWN_MOVE;
-constexpr HalfMove FIFTY_MOVE_TRESHOLD = 100;
+constexpr HalfMove FIFTY_MOVE_THRESHOLD = 100;
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap COL_NUMS{{
+CHESS_ENGINE_MAP_QUALIFIER PositionToNumMap COL_NUMS{{
     1, 2, 3, 4, 5, 6, 7, 8,
     1, 2, 3, 4, 5, 6, 7, 8,
     1, 2, 3, 4, 5, 6, 7, 8,
@@ -27,7 +27,7 @@ CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap COL_NUMS{{
     1, 2, 3, 4, 5, 6, 7, 8,
     1, 2, 3, 4, 5, 6, 7, 8
 }};
-CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap ROW_NUMS{{
+CHESS_ENGINE_MAP_QUALIFIER PositionToNumMap ROW_NUMS{{
     8, 8, 8, 8, 8, 8, 8, 8,
     7, 7, 7, 7, 7, 7, 7, 7,
     6, 6, 6, 6, 6, 6, 6, 6,
@@ -37,7 +37,7 @@ CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap ROW_NUMS{{
     2, 2, 2, 2, 2, 2, 2, 2,
     1, 1, 1, 1, 1, 1, 1, 1
 }};
-CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap DIAG1_NUMS{{
+CHESS_ENGINE_MAP_QUALIFIER PositionToNumMap DIAG1_NUMS{{
     1, 2,  3,  4,  5,  6,  7,  8,
     2, 3,  4,  5,  6,  7,  8,  9,
     3, 4,  5,  6,  7,  8,  9, 10,
@@ -47,7 +47,7 @@ CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap DIAG1_NUMS{{
     7, 8,  9, 10, 11, 12, 13, 14,
     8, 9, 10, 11, 12, 13, 14, 15
 }};
-CHESS_ENGINE_MAP_CVALIFIER PositionToNumMap DIAG2_NUMS{{
+CHESS_ENGINE_MAP_QUALIFIER PositionToNumMap DIAG2_NUMS{{
      8,  7,  6,  5,  4,  3, 2, 1,
      9,  8,  7,  6,  5,  4, 3, 2,
     10,  9,  8,  7,  6,  5, 4, 3,
@@ -104,7 +104,7 @@ inline bool isBlackPawnDoubleMove(const Positions& positions) {
 }
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER PieceToWeightMap MATERIAL_WEIGHTS{{
+CHESS_ENGINE_MAP_QUALIFIER PieceToWeightMap MATERIAL_WEIGHTS{{
     /* Empty */    0,
     /* Pawn */   100,
     /* Knight */ 320,
@@ -117,7 +117,7 @@ CHESS_ENGINE_MAP_CVALIFIER PieceToWeightMap MATERIAL_WEIGHTS{{
 
 // Piece-Square Tables: https://chessprogramming.org/Simplified_Evaluation_Function
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER PiecePositionToWeightMap WHITE_PST_WEIGHTS{{
+CHESS_ENGINE_MAP_QUALIFIER PiecePositionToWeightMap WHITE_PST_WEIGHTS{{
     {  /* Pawn late */
        0,  0,  0,  0,  0,  0,  0,  0,
       80, 80, 80, 80, 80, 80, 80, 80,
@@ -202,7 +202,7 @@ CHESS_ENGINE_MAP_CVALIFIER PiecePositionToWeightMap WHITE_PST_WEIGHTS{{
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER PiecePositionToWeightMap BLACK_PST_WEIGHTS{{
+CHESS_ENGINE_MAP_QUALIFIER PiecePositionToWeightMap BLACK_PST_WEIGHTS{{
     {  /* Pawn late */
        0,  0,  0,  0,  0,  0,  0,  0,
       10, 10, 10, 10, 10, 10, 10, 10,
@@ -301,28 +301,28 @@ enum UciPosition : Position::ValueType {
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER CastlingMove WHITE_KING_CASTLING_MOVE{
+CHESS_ENGINE_MAP_QUALIFIER CastlingMove WHITE_KING_CASTLING_MOVE{
     {PieceType::WhiteKing, PieceType::WhiteRook},
     {e1, g1},
     {h1, f1},
     {f1, g1},
     MoveType::CastleKing
 };
-CHESS_ENGINE_MAP_CVALIFIER CastlingMove WHITE_QUEEN_CASTLING_MOVE{
+CHESS_ENGINE_MAP_QUALIFIER CastlingMove WHITE_QUEEN_CASTLING_MOVE{
     {PieceType::WhiteKing, PieceType::WhiteRook},
     {e1, c1},
     {a1, d1},
     {d1, c1, b1},
     MoveType::CastleQueen
 };
-CHESS_ENGINE_MAP_CVALIFIER CastlingMove BLACK_KING_CASTLING_MOVE{
+CHESS_ENGINE_MAP_QUALIFIER CastlingMove BLACK_KING_CASTLING_MOVE{
     {PieceType::BlackKing, PieceType::BlackRook},
     {e8, g8},
     {h8, f8},
     {f8, g8},
     MoveType::CastleKing
 };
-CHESS_ENGINE_MAP_CVALIFIER CastlingMove BLACK_QUEEN_CASTLING_MOVE{
+CHESS_ENGINE_MAP_QUALIFIER CastlingMove BLACK_QUEEN_CASTLING_MOVE{
     {PieceType::BlackKing, PieceType::BlackRook},
     {e8, c8},
     {a8, d8},
@@ -332,7 +332,7 @@ CHESS_ENGINE_MAP_CVALIFIER CastlingMove BLACK_QUEEN_CASTLING_MOVE{
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER DoubleMoveSrcToEnPassantMovesMap WHITE_PAWN_DOUBLE_MOVE_SRC_TO_EN_PASSANT_MOVES{
+CHESS_ENGINE_MAP_QUALIFIER DoubleMoveSrcToEnPassantMovesMap WHITE_PAWN_DOUBLE_MOVE_SRC_TO_EN_PASSANT_MOVES{
     a2,
     h2,
     {
@@ -346,7 +346,7 @@ CHESS_ENGINE_MAP_CVALIFIER DoubleMoveSrcToEnPassantMovesMap WHITE_PAWN_DOUBLE_MO
       /* h2 */ {h3, h4, g4, none},
     },
 };
-CHESS_ENGINE_MAP_CVALIFIER DoubleMoveSrcToEnPassantMovesMap BLACK_PAWN_DOUBLE_MOVE_SRC_TO_EN_PASSANT_MOVES{
+CHESS_ENGINE_MAP_QUALIFIER DoubleMoveSrcToEnPassantMovesMap BLACK_PAWN_DOUBLE_MOVE_SRC_TO_EN_PASSANT_MOVES{
     a7,
     h7,
     {
@@ -360,7 +360,7 @@ CHESS_ENGINE_MAP_CVALIFIER DoubleMoveSrcToEnPassantMovesMap BLACK_PAWN_DOUBLE_MO
       /* h7 */ {h6, h5, g5, none},
     },
 };
-CHESS_ENGINE_MAP_CVALIFIER EnPassantDstToEnPassantRemovesMap WHITE_PAWN_DST_TO_EN_PASANT_REMOVES{
+CHESS_ENGINE_MAP_QUALIFIER EnPassantDstToEnPassantRemovesMap WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES{
     a6,
     h6,
     {
@@ -374,7 +374,7 @@ CHESS_ENGINE_MAP_CVALIFIER EnPassantDstToEnPassantRemovesMap WHITE_PAWN_DST_TO_E
       /* h6 */ {h5, g5, none},
     },
 };
-CHESS_ENGINE_MAP_CVALIFIER EnPassantDstToEnPassantRemovesMap BLACK_PAWN_DST_TO_EN_PASANT_REMOVES{
+CHESS_ENGINE_MAP_QUALIFIER EnPassantDstToEnPassantRemovesMap BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES{
     a3,
     h3,
     {
@@ -391,7 +391,7 @@ CHESS_ENGINE_MAP_CVALIFIER EnPassantDstToEnPassantRemovesMap BLACK_PAWN_DST_TO_E
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDirectionsMap<17> BISHOP_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDirectionsMap<17> BISHOP_DESTINATIONS{
     /* a8 */ {{b7, c6, d5, e4, f3, g2, h1}},
     /* b8 */ {{c7, d6, e5, f4, g3, h2}, {a7}},
     /* c8 */ {{d7, e6, f5, g4, h3}, {b7, a6}},
@@ -460,7 +460,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDirectionsMap<17> BISHOP_DESTINATIONS{
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDirectionsMap<18> ROOK_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDirectionsMap<18> ROOK_DESTINATIONS{
     /* a8 */ {{b8, c8, d8, e8, f8, g8, h8}, {a7, a6, a5, a4, a3, a2, a1}},
     /* b8 */ {{c8, d8, e8, f8, g8, h8}, {b7, b6, b5, b4, b3, b2, b1}, {a8}},
     /* c8 */ {{d8, e8, f8, g8, h8}, {c7, c6, c5, c4, c3, c2, c1}, {b8, a8}},
@@ -529,7 +529,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDirectionsMap<18> ROOK_DESTINATIONS{
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KNIGHT_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KNIGHT_DESTINATIONS{
     /* a8 */ {c7, b6},
     /* b8 */ {d7, c6, a6},
     /* c8 */ {e7, d6, b6, a7},
@@ -598,7 +598,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KNIGHT_DEST
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KING_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KING_DESTINATIONS{
     /* a8 */ {b8, b7, a7},
     /* b8 */ {c8, c7, b7, a7, a8},
     /* c8 */ {d8, d7, c7, b7, b8},
@@ -667,7 +667,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<MAX_DESTINATIONS> KING_DESTIN
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> WHITE_PAWN_MOVE_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<2> WHITE_PAWN_MOVE_DESTINATIONS{
     /* a8 */ {},
     /* b8 */ {},
     /* c8 */ {},
@@ -736,7 +736,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> WHITE_PAWN_MOVE_DESTINATIO
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> WHITE_PAWN_BEAT_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<2> WHITE_PAWN_BEAT_DESTINATIONS{
     /* a8 */ {},
     /* b8 */ {},
     /* c8 */ {},
@@ -805,7 +805,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> WHITE_PAWN_BEAT_DESTINATIO
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> BLACK_PAWN_MOVE_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<2> BLACK_PAWN_MOVE_DESTINATIONS{
     /* a8 */ {a7},
     /* b8 */ {b7},
     /* c8 */ {c7},
@@ -874,7 +874,7 @@ CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> BLACK_PAWN_MOVE_DESTINATIO
 // clang-format on
 
 // clang-format off
-CHESS_ENGINE_MAP_CVALIFIER SourceToDestinationsMap<2> BLACK_PAWN_BEAT_DESTINATIONS{
+CHESS_ENGINE_MAP_QUALIFIER SourceToDestinationsMap<2> BLACK_PAWN_BEAT_DESTINATIONS{
     /* a8 */ {b7},
     /* b8 */ {a7, c7},
     /* c8 */ {b7, d7},
@@ -1327,11 +1327,11 @@ const Moves& Engine::createMoves(Position src) {
             }
         } else if (move.isEnPassant()) {
             if (rootRound.isWhiteTurn()) {
-                if (WHITE_PAWN_DST_TO_EN_PASANT_REMOVES[move.positions.dst].beat == src) {
+                if (WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES[move.positions.dst].beat == src) {
                     moves.push(move);
                 }
             } else {
-                if (BLACK_PAWN_DST_TO_EN_PASANT_REMOVES[move.positions.dst].beat == src) {
+                if (BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES[move.positions.dst].beat == src) {
                     moves.push(move);
                 }
             }
@@ -1826,7 +1826,7 @@ void Engine::diveWhitePositionalWeights(PstWeights& weights, const Move& move) c
     }
 
     if (move.isBeat()) {
-        const auto beat = move.isEnPassant() ? WHITE_PAWN_DST_TO_EN_PASANT_REMOVES[positions.dst].beat : positions.dst;
+        const auto beat = move.isEnPassant() ? WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES[positions.dst].beat : positions.dst;
         weights += BLACK_PST_WEIGHTS(beat, pieces.dst.getKind());
     }
 }
@@ -1846,7 +1846,7 @@ void Engine::diveBlackPositionalWeights(PstWeights& weights, const Move& move) c
     }
 
     if (move.isBeat()) {
-        const auto beat = move.isEnPassant() ? BLACK_PAWN_DST_TO_EN_PASANT_REMOVES[positions.dst].beat : positions.dst;
+        const auto beat = move.isEnPassant() ? BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES[positions.dst].beat : positions.dst;
         weights -= WHITE_PST_WEIGHTS(beat, pieces.dst.getKind());
     }
 }
@@ -1928,7 +1928,7 @@ void Engine::redoBoard(const Round& round, const Move& move) {
                 redoNormalMove(kingPositions.white, PieceType::WhiteKing, move);
                 break;
             case MoveType::EnPassant:
-                redoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASANT_REMOVES, move);
+                redoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES, move);
                 break;
             case MoveType::CastleKing:
                 redoCastlingMove(kingPositions.white, WHITE_KING_CASTLING_MOVE);
@@ -1949,7 +1949,7 @@ void Engine::redoBoard(const Round& round, const Move& move) {
                 redoNormalMove(kingPositions.black, PieceType::BlackKing, move);
                 break;
             case MoveType::EnPassant:
-                redoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASANT_REMOVES, move);
+                redoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES, move);
                 break;
             case MoveType::CastleKing:
                 redoCastlingMove(kingPositions.black, BLACK_KING_CASTLING_MOVE);
@@ -2016,7 +2016,7 @@ void Engine::undoBoard(const Round& round, const Move& move) {
                 undoNormalMove(kingPositions.white, PieceType::WhiteKing, move);
                 break;
             case MoveType::EnPassant:
-                undoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASANT_REMOVES, PieceType::BlackPawn, move);
+                undoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES, PieceType::BlackPawn, move);
                 break;
             case MoveType::CastleKing:
                 undoCastlingMove(kingPositions.white, WHITE_KING_CASTLING_MOVE);
@@ -2037,7 +2037,7 @@ void Engine::undoBoard(const Round& round, const Move& move) {
                 undoNormalMove(kingPositions.black, PieceType::BlackKing, move);
                 break;
             case MoveType::EnPassant:
-                undoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASANT_REMOVES, PieceType::WhitePawn, move);
+                undoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES, PieceType::WhitePawn, move);
                 break;
             case MoveType::CastleKing:
                 undoCastlingMove(kingPositions.black, BLACK_KING_CASTLING_MOVE);
@@ -2190,10 +2190,10 @@ void Engine::addEnPassantMoves(Moves& moves, const Round& round) const {
         return;
     }
     if (round.isWhiteTurn()) {
-        addEnPassantMoves(moves, round, WHITE_PAWN_DST_TO_EN_PASANT_REMOVES[round.enPassant], PieceType::WhitePawn,
+        addEnPassantMoves(moves, round, WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES[round.enPassant], PieceType::WhitePawn,
                           PieceType::BlackPawn);
     } else {
-        addEnPassantMoves(moves, round, BLACK_PAWN_DST_TO_EN_PASANT_REMOVES[round.enPassant], PieceType::BlackPawn,
+        addEnPassantMoves(moves, round, BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES[round.enPassant], PieceType::BlackPawn,
                           PieceType::WhitePawn);
     }
 }
@@ -2468,7 +2468,7 @@ Weight Engine::evaluate(const Round& round) const {
 }
 
 bool Engine::isDrawByFiftyMove(const Round& round) const {
-    return round.halfMove >= FIFTY_MOVE_TRESHOLD;
+    return round.halfMove >= FIFTY_MOVE_THRESHOLD;
 }
 
 // Obvious Draws: https://chessprogramming.org/Draw_Evaluation
