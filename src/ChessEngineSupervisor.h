@@ -23,8 +23,8 @@ class Supervisor {
         time(),
         nextPullTime(),
         cyclicPullPeriod(),
-        dafaultCyclicPull(),
-        cyclicPull(&dafaultCyclicPull) {}
+        defaultCyclicPull(),
+        cyclicPull(&defaultCyclicPull) {}
 
     void begin() {
         stopped = false;
@@ -50,7 +50,7 @@ class Supervisor {
     }
 
     void checkCyclicPull() {
-        if (cyclicPull == &dafaultCyclicPull || time < nextPullTime) {
+        if (cyclicPull == &defaultCyclicPull || time < nextPullTime) {
             return;
         }
         nextPullTime += cyclicPullPeriod;
@@ -93,7 +93,7 @@ class Supervisor {
 
     Milliseconds nextPullTime;
     Milliseconds cyclicPullPeriod;
-    CyclicPull dafaultCyclicPull;
+    CyclicPull defaultCyclicPull;
     CyclicPull* cyclicPull;
 };
 }
