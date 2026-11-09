@@ -976,21 +976,23 @@ Engine::Engine() :
 #ifdef CHESS_ENGINE_MULTI_TASK
     task(*this),
 #endif
+#ifdef CHESS_ENGINE_HISTORY
+    history(),
+    oldestRound(),
+    oldestBoard(),
+#endif
     search(),
     rootRound(search[ROOT_DEPTH]),
     rootNextRound(search[ROOT_NEXT_DEPTH]),
     board(),
     kingPositions(),
+    lastMove(),
     moves(),
     bestMoves(),
     modes(),
     options(),
     maxReachedDepth(),
-    supervisor(options),
-    history(),
-    oldestRound(),
-    oldestBoard(),
-    lastMove() {
+    supervisor(options) {
 }
 
 bool Engine::begin(const String& fen) {
@@ -999,15 +1001,18 @@ bool Engine::begin(const String& fen) {
         CHESS_ENGINE_LOG(TAG, "Invalid fen");
         return false;
     }
-    history.clear();
     updateRound();
-    lastMove = Move::none();
+#ifdef CHESS_ENGINE_HISTORY
+    history.clear();
     oldestRound = rootRound;
     oldestBoard = board;
+#endif
+    lastMove = Move::none();
     return true;
 }
 
 bool Engine::undo(size_t num) {
+#ifdef CHESS_ENGINE_HISTORY
     if (history.size() < num) {
         return false;
     }
@@ -1020,6 +1025,9 @@ bool Engine::undo(size_t num) {
     updateRound();
     lastMove = history.empty() ? Move::none() : history.back();
     return true;
+#else
+    return false;
+#endif
 }
 
 Move Engine::find(const Move& move) const {
@@ -1057,9 +1065,18 @@ Move Engine::make(const Move& move) {
     if (found.isNone()) {
         return found;
     }
-    history.push(found);
+#ifdef CHESS_ENGINE_HISTORY
+    if (history.full()) {
+        history.clear();
+        oldestRound = rootRound;
+        oldestBoard = board;
+    }
+#endif
     applyMove(found);
     updateRound();
+#ifdef CHESS_ENGINE_HISTORY
+    history.push(found);
+#endif
     lastMove = found;
     return found;
 }

@@ -158,11 +158,18 @@ class Engine {
     Task task;
 #endif
 
+#ifdef CHESS_ENGINE_HISTORY
+    History history;
+    Round oldestRound;
+    Board oldestBoard;
+#endif
+
     Search search;
     Round& rootRound;
     Round& rootNextRound;
     Board board;
     KingPositions kingPositions;
+    Move lastMove;
 
     Moves moves;
     Moves bestMoves;
@@ -172,10 +179,5 @@ class Engine {
 
     Depth maxReachedDepth;
     Supervisor supervisor;
-
-    History history;
-    Round oldestRound;
-    Board oldestBoard;
-    Move lastMove;
 };
 }
