@@ -1227,6 +1227,10 @@ const Moves& Engine::solveMoves() {
     supervisor.begin();
     modes = Modes();
 
+    for (Move& move : rootMoves) {
+        move.weight = UNSCORED_MOVE_WEIGHT;
+    }
+
     for (Depth depthTarget = NEGAMAX_MIN_DEPTH; depthTarget <= options.maxDepth; depthTarget++) {
         maxReachedDepth = depthTarget;
 
@@ -2431,9 +2435,9 @@ void Engine::generateLegalMoves(Depth depth) {
 
     for (Move& move : moves) {
         redoBoard(round, move);
-        const bool isInCheck = isKingInCheck(round);
-        move.weight = isInCheck ? ILLEGAL_MOVE_WEIGHT : 0;
-        if (!isInCheck) {
+        if (isKingInCheck(round)) {
+            move.weight = ILLEGAL_MOVE_WEIGHT;
+        } else {
             legalCount++;
         }
         undoBoard(round, move);
