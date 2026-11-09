@@ -2,7 +2,7 @@
 
 // clang-format off: Used IndentPPDirectives with BeforeHash
 #if defined(ARDUINO_ARCH_ESP32)
-    #define CHESS_ENGINE_ARCH_MAX_MOVES 150
+    #define CHESS_ENGINE_ARCH_MAX_MOVES 218
     #define CHESS_ENGINE_ARCH_MAX_HISTORY 500
     #define CHESS_ENGINE_ARCH_NEGAMAX_MAX_DEPTH 13
     #define CHESS_ENGINE_ARCH_QUIESCENCE_MOVE_MAX_DEPTH 4
