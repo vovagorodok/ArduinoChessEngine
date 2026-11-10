@@ -24,7 +24,7 @@ class Engine {
 
     bool begin(const String& fen);
     bool undo(size_t num = 1);
-    Move find(const Move& uci) const;
+    Move find(const Move& move) const;
     Move find(const String& uci) const;
     Move make(const Move& move);
     Move make(const String& uci);
