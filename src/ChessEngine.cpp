@@ -2704,7 +2704,7 @@ Weight Engine::quiescence(Depth depth, Weight alpha, Weight beta, Depth depthLef
             if (!isOpponentKingInSlidingCheck(round)) {
                 undoBoard(round, move);
                 continue;
-            } else if (depthLeft == QUIESCENCE_EXTRA_CHECK_DEPTH_LEFT &&
+            } else if (options.extraDepth && depthLeft == QUIESCENCE_EXTRA_CHECK_DEPTH_LEFT &&
                        search.isNextRoundExist(depth + QUIESCENCE_EXTRA_DEPTHS)) {
                 extraDepths = QUIESCENCE_EXTRA_DEPTHS;
             }
@@ -2753,13 +2753,20 @@ Weight Engine::negamax(Depth depth, Weight alpha, Weight beta, Depth depthLeft) 
         return ANY_WEIGHT;
     }
 
-    if (depthLeft <= 0) {
-        const Depth quiescenceDepths =
-            search.getPrevRound(depth).move.isBeat() ? QUIESCENCE_BEAT_DEPTHS : QUIESCENCE_MOVE_DEPTHS;
-        return quiescence(depth, alpha, beta, quiescenceDepths);
-    }
-
     auto& round = search.getRound(depth);
+
+    if (depthLeft <= 0) {
+        if (options.quiescence) {
+            const Depth quiescenceDepths =
+                search.getPrevRound(depth).move.isBeat() ? QUIESCENCE_BEAT_DEPTHS : QUIESCENCE_MOVE_DEPTHS;
+            return quiescence(depth, alpha, beta, quiescenceDepths);
+        } else {
+            if (depth > maxReachedDepth) {
+                maxReachedDepth = depth;
+            }
+            return evaluate(round);
+        }
+    }
 
     if (depth > ROOT_DEPTH) {
         setRoundCheckStatus(round);
@@ -2806,10 +2813,9 @@ Weight Engine::negamax(Depth depth, Weight alpha, Weight beta, Depth depthLeft) 
 
     nextRound.best = Move::none();
     for (auto& move : round.moves) {
-        const Depth extraDepths =
-            depth == NEGAMAX_EXTRA_CHECK_DEPTH && depthLeft <= MEGAMAX_EXTRA_CHECK_MAX_DEPTH_LEFT && move.isCheck ?
-                NEGAMAX_EXTRA_DEPTHS :
-                WITHOUT_EXTRA_DEPTHS;
+        const bool isExtraDepthNeeded = options.extraDepth && depth == NEGAMAX_EXTRA_CHECK_DEPTH &&
+                                        depthLeft <= MEGAMAX_EXTRA_CHECK_MAX_DEPTH_LEFT && move.isCheck;
+        const Depth extraDepths = isExtraDepthNeeded ? NEGAMAX_EXTRA_DEPTHS : WITHOUT_EXTRA_DEPTHS;
 
         redoBoard(round, move);
 
