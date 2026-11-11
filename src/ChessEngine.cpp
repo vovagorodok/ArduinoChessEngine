@@ -1248,6 +1248,7 @@ const Moves& Engine::solveMoves() {
         move.weight = UNSCORED_MOVE_WEIGHT;
     }
 
+    // Iterative Deepening: https://chessprogramming.org/Iterative_Deepening
     for (Depth depthTarget = NEGAMAX_MIN_DEPTH; depthTarget <= options.maxDepth; depthTarget++) {
         maxReachedDepth = depthTarget;
 
