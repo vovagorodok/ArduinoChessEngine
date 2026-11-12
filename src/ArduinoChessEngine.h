@@ -27,11 +27,13 @@ using ChessEngineFullMove = ChessEngine::FullMove;
 using ChessEngineRoundStatus = ChessEngine::RoundStatus;
 using ChessEngineMoves = ChessEngine::Moves;
 
+using ChessEngineRandomOption = ChessEngine::RandomOption;
 using ChessEngineNullMoveOption = ChessEngine::NullMoveOption;
 using ChessEngineFutilityOption = ChessEngine::FutilityOption;
 using ChessEngineLazyEvalOption = ChessEngine::LazyEvalOption;
+using ChessEngineQuiescenceOption = ChessEngine::QuiescenceOption;
 using ChessEngineAspirationOption = ChessEngine::AspirationOption;
-using ChessEngineRandomOption = ChessEngine::RandomOption;
+using ChessEngineExtraDepthOption = ChessEngine::ExtraDepthOption;
 using ChessEngineMaxDepthOption = ChessEngine::MaxDepthOption;
 using ChessEngineTimeLimitOption = ChessEngine::TimeLimitOption;
 using ChessEngineOptions = ChessEngine::Options;
