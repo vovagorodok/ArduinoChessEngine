@@ -56,6 +56,7 @@ class Engine {
     bool isInvalid() const;
     bool isDraw() const;
     bool isEnd() const;
+    bool isVariantSupported() const;
 
     Variant getVariant() const;
     void setVariant(Variant var);

@@ -1211,12 +1211,24 @@ bool Engine::isEnd() const {
     return rootRound.isEnd();
 }
 
+bool Engine::isVariantSupported() const {
+    return variant != Variant::Unsupported;
+}
+
 Variant Engine::getVariant() const {
     return variant;
 }
 
 void Engine::setVariant(Variant var) {
-    variant = var;
+    switch (var) {
+        case Variant::Standard:
+        case Variant::Chess960:
+            variant = var;
+            break;
+        default:
+            variant = Variant::Unsupported;
+            break;
+    }
     rootRound.status = RoundStatus::Invalid;
 }
 
