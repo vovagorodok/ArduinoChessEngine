@@ -7,7 +7,7 @@
 namespace ChessEngine {
 using Board = std::array<Piece, BOARD_SIZE>;
 
-struct KingPositions {
+struct Kings {
     Position white;
     Position black;
     Position check;

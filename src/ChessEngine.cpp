@@ -994,7 +994,7 @@ Engine::Engine() :
     rootRound(search[ROOT_DEPTH]),
     rootNextRound(search[ROOT_NEXT_DEPTH]),
     board(),
-    kingPositions(),
+    kings(),
     castlingRooks(),
     lastMove(),
     moves(),
@@ -1148,7 +1148,7 @@ RoundStatus Engine::getRoundStatus() const {
 }
 
 Position Engine::getCheck() const {
-    return kingPositions.check;
+    return kings.check;
 }
 
 Move Engine::getLastMove() const {
@@ -1482,7 +1482,7 @@ bool Engine::applyFen(const String& fen) {
     rootRound.halfMove = 0;
     rootRound.fullMove = 0;
     rootRound.status = RoundStatus::Normal;
-    kingPositions = KingPositions{};
+    kings = Kings{};
     castlingRooks = CastlingRooks{};
     for (Position pos = 0; pos < BOARD_SIZE; pos++) {
         board[pos] = Piece::empty();
@@ -1574,9 +1574,9 @@ void Engine::updateRound() {
     setRoundPhase(rootRound);
     setKingsPositions();
 
-    if (kingPositions.white.isNone() || kingPositions.black.isNone()) {
+    if (kings.white.isNone() || kings.black.isNone()) {
         rootRound.status = RoundStatus::Invalid;
-        CHESS_ENGINE_LOG(TAG, "Invalid king positions");
+        CHESS_ENGINE_LOG(TAG, "Invalid kings positions");
         return;
     }
 
@@ -1763,12 +1763,12 @@ bool Engine::isAutoPromotionNeeded(const Move& move) const {
 // Sliding Piece Attacks: https://chessprogramming.org/Sliding_Piece_Attacks
 bool Engine::isWhiteKingInSlidingCheck() const {
 #ifdef CHESS_ENGINE_LOGS
-    if (kingPositions.white.isNone() || board[kingPositions.white] != PieceType::WhiteKing) {
-        CHESS_ENGINE_LOG(TAG, "Invalid white king position: %d", static_cast<int>(kingPositions.white));
+    if (kings.white.isNone() || board[kings.white] != PieceType::WhiteKing) {
+        CHESS_ENGINE_LOG(TAG, "Invalid white king position: %d", static_cast<int>(kings.white));
         return false;
     }
 #endif
-    for (auto dsts : BISHOP_DESTINATIONS[kingPositions.white]) {
+    for (auto dsts : BISHOP_DESTINATIONS[kings.white]) {
         for (Position dst : dsts) {
             const auto piece = board[dst];
             if (piece == PieceType::BlackBishop || piece == PieceType::BlackQueen) {
@@ -1779,7 +1779,7 @@ bool Engine::isWhiteKingInSlidingCheck() const {
             }
         }
     }
-    for (auto dsts : ROOK_DESTINATIONS[kingPositions.white]) {
+    for (auto dsts : ROOK_DESTINATIONS[kings.white]) {
         for (Position dst : dsts) {
             const auto piece = board[dst];
             if (piece == PieceType::BlackRook || piece == PieceType::BlackQueen) {
@@ -1795,12 +1795,12 @@ bool Engine::isWhiteKingInSlidingCheck() const {
 
 bool Engine::isBlackKingInSlidingCheck() const {
 #ifdef CHESS_ENGINE_LOGS
-    if (kingPositions.black.isNone() || board[kingPositions.black] != PieceType::BlackKing) {
-        CHESS_ENGINE_LOG(TAG, "Invalid black king position: %d", static_cast<int>(kingPositions.black));
+    if (kings.black.isNone() || board[kings.black] != PieceType::BlackKing) {
+        CHESS_ENGINE_LOG(TAG, "Invalid black king position: %d", static_cast<int>(kings.black));
         return false;
     }
 #endif
-    for (auto dsts : BISHOP_DESTINATIONS[kingPositions.black]) {
+    for (auto dsts : BISHOP_DESTINATIONS[kings.black]) {
         for (Position dst : dsts) {
             const auto piece = board[dst];
             if (piece == PieceType::WhiteBishop || piece == PieceType::WhiteQueen) {
@@ -1811,7 +1811,7 @@ bool Engine::isBlackKingInSlidingCheck() const {
             }
         }
     }
-    for (auto dsts : ROOK_DESTINATIONS[kingPositions.black]) {
+    for (auto dsts : ROOK_DESTINATIONS[kings.black]) {
         for (Position dst : dsts) {
             const auto piece = board[dst];
             if (piece == PieceType::WhiteRook || piece == PieceType::WhiteQueen) {
@@ -1833,17 +1833,17 @@ bool Engine::isWhiteKingInCheck() const {
     if (isWhiteKingInSlidingCheck()) {
         return true;
     }
-    for (Position dst : KNIGHT_DESTINATIONS[kingPositions.white]) {
+    for (Position dst : KNIGHT_DESTINATIONS[kings.white]) {
         if (board[dst] == PieceType::BlackKnight) {
             return true;
         }
     }
-    for (Position dst : WHITE_PAWN_BEAT_DESTINATIONS[kingPositions.white]) {
+    for (Position dst : WHITE_PAWN_BEAT_DESTINATIONS[kings.white]) {
         if (board[dst] == PieceType::BlackPawn) {
             return true;
         }
     }
-    for (Position dst : KING_DESTINATIONS[kingPositions.white]) {
+    for (Position dst : KING_DESTINATIONS[kings.white]) {
         if (board[dst] == PieceType::BlackKing) {
             return true;
         }
@@ -1855,17 +1855,17 @@ bool Engine::isBlackKingInCheck() const {
     if (isBlackKingInSlidingCheck()) {
         return true;
     }
-    for (Position dst : KNIGHT_DESTINATIONS[kingPositions.black]) {
+    for (Position dst : KNIGHT_DESTINATIONS[kings.black]) {
         if (board[dst] == PieceType::WhiteKnight) {
             return true;
         }
     }
-    for (Position dst : BLACK_PAWN_BEAT_DESTINATIONS[kingPositions.black]) {
+    for (Position dst : BLACK_PAWN_BEAT_DESTINATIONS[kings.black]) {
         if (board[dst] == PieceType::WhitePawn) {
             return true;
         }
     }
-    for (Position dst : KING_DESTINATIONS[kingPositions.black]) {
+    for (Position dst : KING_DESTINATIONS[kings.black]) {
         if (board[dst] == PieceType::WhiteKing) {
             return true;
         }
@@ -1888,19 +1888,19 @@ bool Engine::isOpponentKingInCheck(const Round& round) const {
 void Engine::setKingsPositions() {
     for (Position pos = 0; pos < BOARD_SIZE; pos++) {
         if (board[pos] == PieceType::WhiteKing) {
-            kingPositions.white = pos;
+            kings.white = pos;
         }
         if (board[pos] == PieceType::BlackKing) {
-            kingPositions.black = pos;
+            kings.black = pos;
         }
     }
 }
 
 void Engine::setCheckPosition(Round& round) {
     if (round.isCheck()) {
-        kingPositions.check = round.isWhiteTurn() ? kingPositions.white : kingPositions.black;
+        kings.check = round.isWhiteTurn() ? kings.white : kings.black;
     } else {
-        kingPositions.check = Position::none();
+        kings.check = Position::none();
     }
 }
 
@@ -2210,13 +2210,13 @@ void Engine::redoBoard(const Round& round, const Move& move) {
     if (round.isWhiteTurn()) {
         switch (type) {
             case MoveType::Normal:
-                redoNormalMove(kingPositions.white, PieceType::WhiteKing, move);
+                redoNormalMove(kings.white, PieceType::WhiteKing, move);
                 break;
             case MoveType::CastleKing:
-                redoCastlingMove(kingPositions.white, WHITE_KING_CASTLING_MOVE, move);
+                redoCastlingMove(kings.white, WHITE_KING_CASTLING_MOVE, move);
                 break;
             case MoveType::CastleQueen:
-                redoCastlingMove(kingPositions.white, WHITE_QUEEN_CASTLING_MOVE, move);
+                redoCastlingMove(kings.white, WHITE_QUEEN_CASTLING_MOVE, move);
                 break;
             case MoveType::EnPassant:
                 redoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES, move);
@@ -2231,13 +2231,13 @@ void Engine::redoBoard(const Round& round, const Move& move) {
     } else {
         switch (type) {
             case MoveType::Normal:
-                redoNormalMove(kingPositions.black, PieceType::BlackKing, move);
+                redoNormalMove(kings.black, PieceType::BlackKing, move);
                 break;
             case MoveType::CastleKing:
-                redoCastlingMove(kingPositions.black, BLACK_KING_CASTLING_MOVE, move);
+                redoCastlingMove(kings.black, BLACK_KING_CASTLING_MOVE, move);
                 break;
             case MoveType::CastleQueen:
-                redoCastlingMove(kingPositions.black, BLACK_QUEEN_CASTLING_MOVE, move);
+                redoCastlingMove(kings.black, BLACK_QUEEN_CASTLING_MOVE, move);
                 break;
             case MoveType::EnPassant:
                 redoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES, move);
@@ -2315,13 +2315,13 @@ void Engine::undoBoard(const Round& round, const Move& move) {
     if (round.isWhiteTurn()) {
         switch (move.type) {
             case MoveType::Normal:
-                undoNormalMove(kingPositions.white, PieceType::WhiteKing, move);
+                undoNormalMove(kings.white, PieceType::WhiteKing, move);
                 break;
             case MoveType::CastleKing:
-                undoCastlingMove(kingPositions.white, WHITE_KING_CASTLING_MOVE, move);
+                undoCastlingMove(kings.white, WHITE_KING_CASTLING_MOVE, move);
                 break;
             case MoveType::CastleQueen:
-                undoCastlingMove(kingPositions.white, WHITE_QUEEN_CASTLING_MOVE, move);
+                undoCastlingMove(kings.white, WHITE_QUEEN_CASTLING_MOVE, move);
                 break;
             case MoveType::EnPassant:
                 undoEnPassantMove(WHITE_PAWN_DST_TO_EN_PASSANT_REMOVES, PieceType::BlackPawn, move);
@@ -2336,13 +2336,13 @@ void Engine::undoBoard(const Round& round, const Move& move) {
     } else {
         switch (type) {
             case MoveType::Normal:
-                undoNormalMove(kingPositions.black, PieceType::BlackKing, move);
+                undoNormalMove(kings.black, PieceType::BlackKing, move);
                 break;
             case MoveType::CastleKing:
-                undoCastlingMove(kingPositions.black, BLACK_KING_CASTLING_MOVE, move);
+                undoCastlingMove(kings.black, BLACK_KING_CASTLING_MOVE, move);
                 break;
             case MoveType::CastleQueen:
-                undoCastlingMove(kingPositions.black, BLACK_QUEEN_CASTLING_MOVE, move);
+                undoCastlingMove(kings.black, BLACK_QUEEN_CASTLING_MOVE, move);
                 break;
             case MoveType::EnPassant:
                 undoEnPassantMove(BLACK_PAWN_DST_TO_EN_PASSANT_REMOVES, PieceType::WhitePawn, move);
@@ -2541,17 +2541,17 @@ void Engine::addChess960CastlingMoves(Moves& moves, const Round& round) {
 
     if (round.isWhiteTurn()) {
         if (castling.WhiteKing) {
-            addChess960CastlingMove(moves, kingPositions.white, castlingRooks.WhiteKing, WHITE_KING_CASTLING_MOVE);
+            addChess960CastlingMove(moves, kings.white, castlingRooks.WhiteKing, WHITE_KING_CASTLING_MOVE);
         }
         if (castling.WhiteQueen) {
-            addChess960CastlingMove(moves, kingPositions.white, castlingRooks.WhiteQueen, WHITE_QUEEN_CASTLING_MOVE);
+            addChess960CastlingMove(moves, kings.white, castlingRooks.WhiteQueen, WHITE_QUEEN_CASTLING_MOVE);
         }
     } else {
         if (castling.BlackKing) {
-            addChess960CastlingMove(moves, kingPositions.black, castlingRooks.BlackKing, BLACK_KING_CASTLING_MOVE);
+            addChess960CastlingMove(moves, kings.black, castlingRooks.BlackKing, BLACK_KING_CASTLING_MOVE);
         }
         if (castling.BlackQueen) {
-            addChess960CastlingMove(moves, kingPositions.black, castlingRooks.BlackQueen, BLACK_QUEEN_CASTLING_MOVE);
+            addChess960CastlingMove(moves, kings.black, castlingRooks.BlackQueen, BLACK_QUEEN_CASTLING_MOVE);
         }
     }
 }
@@ -2561,17 +2561,17 @@ void Engine::addStandardCastlingMoves(Moves& moves, const Round& round) {
 
     if (round.isWhiteTurn()) {
         if (castling.WhiteKing) {
-            addStandardCastlingMove(moves, kingPositions.white, WHITE_KING_CASTLING_MOVE);
+            addStandardCastlingMove(moves, kings.white, WHITE_KING_CASTLING_MOVE);
         }
         if (castling.WhiteQueen) {
-            addStandardCastlingMove(moves, kingPositions.white, WHITE_QUEEN_CASTLING_MOVE);
+            addStandardCastlingMove(moves, kings.white, WHITE_QUEEN_CASTLING_MOVE);
         }
     } else {
         if (castling.BlackKing) {
-            addStandardCastlingMove(moves, kingPositions.black, BLACK_KING_CASTLING_MOVE);
+            addStandardCastlingMove(moves, kings.black, BLACK_KING_CASTLING_MOVE);
         }
         if (castling.BlackQueen) {
-            addStandardCastlingMove(moves, kingPositions.black, BLACK_QUEEN_CASTLING_MOVE);
+            addStandardCastlingMove(moves, kings.black, BLACK_QUEEN_CASTLING_MOVE);
         }
     }
 }
@@ -2934,7 +2934,7 @@ QuiescenceType Engine::getQuiescenceType(const Move& move) const {
                 return QuiescenceType::Tactical;
             }
             for (Position dst : WHITE_PAWN_BEAT_DESTINATIONS[move.positions.dst]) {
-                if (dst == kingPositions.black) {
+                if (dst == kings.black) {
                     return QuiescenceType::Tactical;
                 }
             }
@@ -2944,7 +2944,7 @@ QuiescenceType Engine::getQuiescenceType(const Move& move) const {
                 return QuiescenceType::Tactical;
             }
             for (Position dst : BLACK_PAWN_BEAT_DESTINATIONS[move.positions.dst]) {
-                if (dst == kingPositions.white) {
+                if (dst == kings.white) {
                     return QuiescenceType::Tactical;
                 }
             }
@@ -2964,32 +2964,32 @@ QuiescenceType Engine::getQuiescenceType(const Move& move) const {
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::WhiteBishop:
-            if (!isSameDiagonal(move.positions.dst, kingPositions.black)) {
+            if (!isSameDiagonal(move.positions.dst, kings.black)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::BlackBishop:
-            if (!isSameDiagonal(move.positions.dst, kingPositions.white)) {
+            if (!isSameDiagonal(move.positions.dst, kings.white)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::WhiteRook:
-            if (!isSameStraight(move.positions.dst, kingPositions.black)) {
+            if (!isSameStraight(move.positions.dst, kings.black)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::BlackRook:
-            if (!isSameStraight(move.positions.dst, kingPositions.white)) {
+            if (!isSameStraight(move.positions.dst, kings.white)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::WhiteQueen:
-            if (!isSameStraightOrDiagonal(move.positions.dst, kingPositions.black)) {
+            if (!isSameStraightOrDiagonal(move.positions.dst, kings.black)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;
         case PieceType::BlackQueen:
-            if (!isSameStraightOrDiagonal(move.positions.dst, kingPositions.white)) {
+            if (!isSameStraightOrDiagonal(move.positions.dst, kings.white)) {
                 return QuiescenceType::Skip;
             }
             return QuiescenceType::MaybeOpponentInCheck;

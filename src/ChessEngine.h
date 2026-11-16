@@ -194,7 +194,7 @@ class Engine {
     Round& rootRound;
     Round& rootNextRound;
     Board board;
-    KingPositions kingPositions; // TODO: Rename to kings?
+    Kings kings;
     CastlingRooks castlingRooks;
     Move lastMove;
 
