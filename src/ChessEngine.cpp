@@ -1422,35 +1422,35 @@ String Engine::createFen() const {
 
     fen += ' ';
     const auto& castling = rootRound.castling;
-    if (castling.WhiteKing or castling.WhiteQueen or castling.BlackKing or castling.BlackQueen) {
+    if (castling.whiteKing or castling.whiteQueen or castling.blackKing or castling.blackQueen) {
         if (variant == Variant::Chess960) {
-            if (castling.WhiteKing) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.WhiteKing,
+            if (castling.whiteKing) {
+                fen += createChess960CastlingAbilitiesChar(castlingRooks.whiteKing,
                                                            findWhiteKingCastlingOutermostRook(), 'K');
             }
-            if (castling.WhiteQueen) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.WhiteQueen,
+            if (castling.whiteQueen) {
+                fen += createChess960CastlingAbilitiesChar(castlingRooks.whiteQueen,
                                                            findWhiteQueenCastlingOutermostRook(), 'Q');
             }
-            if (castling.BlackKing) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.BlackKing,
+            if (castling.blackKing) {
+                fen += createChess960CastlingAbilitiesChar(castlingRooks.blackKing,
                                                            findBlackKingCastlingOutermostRook(), 'k');
             }
-            if (castling.BlackQueen) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.BlackQueen,
+            if (castling.blackQueen) {
+                fen += createChess960CastlingAbilitiesChar(castlingRooks.blackQueen,
                                                            findBlackQueenCastlingOutermostRook(), 'q');
             }
         } else {
-            if (castling.WhiteKing) {
+            if (castling.whiteKing) {
                 fen += "K";
             }
-            if (castling.WhiteQueen) {
+            if (castling.whiteQueen) {
                 fen += "Q";
             }
-            if (castling.BlackKing) {
+            if (castling.blackKing) {
                 fen += "k";
             }
-            if (castling.BlackQueen) {
+            if (castling.blackQueen) {
                 fen += "q";
             }
         }
@@ -1667,21 +1667,21 @@ bool Engine::applyChess960CastlingAbilitiesChar(char ch) {
 
     switch (ch) {
         case 'K':
-            castling.WhiteKing = true;
-            castlingRooks.WhiteKing = findWhiteKingCastlingOutermostRook();
-            return isKingCastlingRook(castlingRooks.WhiteKing, findWhiteCastlingKing());
+            castling.whiteKing = true;
+            castlingRooks.whiteKing = findWhiteKingCastlingOutermostRook();
+            return isKingCastlingRook(castlingRooks.whiteKing, findWhiteCastlingKing());
         case 'Q':
-            castling.WhiteQueen = true;
-            castlingRooks.WhiteQueen = findWhiteQueenCastlingOutermostRook();
-            return isQueenCastlingRook(castlingRooks.WhiteQueen, findWhiteCastlingKing());
+            castling.whiteQueen = true;
+            castlingRooks.whiteQueen = findWhiteQueenCastlingOutermostRook();
+            return isQueenCastlingRook(castlingRooks.whiteQueen, findWhiteCastlingKing());
         case 'k':
-            castling.BlackKing = true;
-            castlingRooks.BlackKing = findBlackKingCastlingOutermostRook();
-            return isKingCastlingRook(castlingRooks.BlackKing, findBlackCastlingKing());
+            castling.blackKing = true;
+            castlingRooks.blackKing = findBlackKingCastlingOutermostRook();
+            return isKingCastlingRook(castlingRooks.blackKing, findBlackCastlingKing());
         case 'q':
-            castling.BlackQueen = true;
-            castlingRooks.BlackQueen = findBlackQueenCastlingOutermostRook();
-            return isQueenCastlingRook(castlingRooks.BlackQueen, findBlackCastlingKing());
+            castling.blackQueen = true;
+            castlingRooks.blackQueen = findBlackQueenCastlingOutermostRook();
+            return isQueenCastlingRook(castlingRooks.blackQueen, findBlackCastlingKing());
         case '-':
             return true;
     }
@@ -1704,19 +1704,19 @@ bool Engine::applyChess960CastlingAbilitiesChar(char ch) {
 
     if (isWhite) {
         if (rook > king) {
-            castling.WhiteKing = true;
-            castlingRooks.WhiteKing = rook;
+            castling.whiteKing = true;
+            castlingRooks.whiteKing = rook;
         } else {
-            castling.WhiteQueen = true;
-            castlingRooks.WhiteQueen = rook;
+            castling.whiteQueen = true;
+            castlingRooks.whiteQueen = rook;
         }
     } else {
         if (rook > king) {
-            castling.BlackKing = true;
-            castlingRooks.BlackKing = rook;
+            castling.blackKing = true;
+            castlingRooks.blackKing = rook;
         } else {
-            castling.BlackQueen = true;
-            castlingRooks.BlackQueen = rook;
+            castling.blackQueen = true;
+            castlingRooks.blackQueen = rook;
         }
     }
     return true;
@@ -1727,16 +1727,16 @@ bool Engine::applyStandardCastlingAbilitiesChar(char ch) {
 
     switch (ch) {
         case 'K':
-            castling.WhiteKing = true;
+            castling.whiteKing = true;
             return true;
         case 'Q':
-            castling.WhiteQueen = true;
+            castling.whiteQueen = true;
             return true;
         case 'k':
-            castling.BlackKing = true;
+            castling.blackKing = true;
             return true;
         case 'q':
-            castling.BlackQueen = true;
+            castling.blackQueen = true;
             return true;
         case '-':
             return true;
@@ -1937,17 +1937,17 @@ void Engine::diveWhiteChess960Castling(CastlingAbilities& castling, const Move& 
     const auto& positions = move.positions;
 
     if (move.pieces.src == PieceType::WhiteKing) {
-        castling.WhiteKing = false;
-        castling.WhiteQueen = false;
-    } else if (positions.src == castlingRooks.WhiteKing) {
-        castling.WhiteKing = false;
-    } else if (positions.src == castlingRooks.WhiteQueen) {
-        castling.WhiteQueen = false;
+        castling.whiteKing = false;
+        castling.whiteQueen = false;
+    } else if (positions.src == castlingRooks.whiteKing) {
+        castling.whiteKing = false;
+    } else if (positions.src == castlingRooks.whiteQueen) {
+        castling.whiteQueen = false;
     }
-    if (positions.dst == castlingRooks.BlackKing) {
-        castling.BlackKing = false;
-    } else if (positions.dst == castlingRooks.BlackQueen) {
-        castling.BlackQueen = false;
+    if (positions.dst == castlingRooks.blackKing) {
+        castling.blackKing = false;
+    } else if (positions.dst == castlingRooks.blackQueen) {
+        castling.blackQueen = false;
     }
 }
 
@@ -1955,17 +1955,17 @@ void Engine::diveWhiteStandardCastling(CastlingAbilities& castling, const Move& 
     const auto& positions = move.positions;
 
     if (positions.src == WHITE_KING_CASTLING_MOVE.king.src) {
-        castling.WhiteKing = false;
-        castling.WhiteQueen = false;
+        castling.whiteKing = false;
+        castling.whiteQueen = false;
     } else if (positions.src == WHITE_KING_CASTLING_MOVE.rook.src) {
-        castling.WhiteKing = false;
+        castling.whiteKing = false;
     } else if (positions.src == WHITE_QUEEN_CASTLING_MOVE.rook.src) {
-        castling.WhiteQueen = false;
+        castling.whiteQueen = false;
     }
     if (positions.dst == BLACK_KING_CASTLING_MOVE.rook.src) {
-        castling.BlackKing = false;
+        castling.blackKing = false;
     } else if (positions.dst == BLACK_QUEEN_CASTLING_MOVE.rook.src) {
-        castling.BlackQueen = false;
+        castling.blackQueen = false;
     }
 }
 
@@ -1973,17 +1973,17 @@ void Engine::diveBlackChess960Castling(CastlingAbilities& castling, const Move& 
     const auto& positions = move.positions;
 
     if (move.pieces.src == PieceType::BlackKing) {
-        castling.BlackKing = false;
-        castling.BlackQueen = false;
-    } else if (positions.src == castlingRooks.BlackKing) {
-        castling.BlackKing = false;
-    } else if (positions.src == castlingRooks.BlackQueen) {
-        castling.BlackQueen = false;
+        castling.blackKing = false;
+        castling.blackQueen = false;
+    } else if (positions.src == castlingRooks.blackKing) {
+        castling.blackKing = false;
+    } else if (positions.src == castlingRooks.blackQueen) {
+        castling.blackQueen = false;
     }
-    if (positions.dst == castlingRooks.WhiteKing) {
-        castling.WhiteKing = false;
-    } else if (positions.dst == castlingRooks.WhiteQueen) {
-        castling.WhiteQueen = false;
+    if (positions.dst == castlingRooks.whiteKing) {
+        castling.whiteKing = false;
+    } else if (positions.dst == castlingRooks.whiteQueen) {
+        castling.whiteQueen = false;
     }
 }
 
@@ -1991,17 +1991,17 @@ void Engine::diveBlackStandardCastling(CastlingAbilities& castling, const Move& 
     const auto& positions = move.positions;
 
     if (positions.src == BLACK_KING_CASTLING_MOVE.king.src) {
-        castling.BlackKing = false;
-        castling.BlackQueen = false;
+        castling.blackKing = false;
+        castling.blackQueen = false;
     } else if (positions.src == BLACK_KING_CASTLING_MOVE.rook.src) {
-        castling.BlackKing = false;
+        castling.blackKing = false;
     } else if (positions.src == BLACK_QUEEN_CASTLING_MOVE.rook.src) {
-        castling.BlackQueen = false;
+        castling.blackQueen = false;
     }
     if (positions.dst == WHITE_KING_CASTLING_MOVE.rook.src) {
-        castling.WhiteKing = false;
+        castling.whiteKing = false;
     } else if (positions.dst == WHITE_QUEEN_CASTLING_MOVE.rook.src) {
-        castling.WhiteQueen = false;
+        castling.whiteQueen = false;
     }
 }
 
@@ -2540,18 +2540,18 @@ void Engine::addChess960CastlingMoves(Moves& moves, const Round& round) {
     const auto& castling = round.castling;
 
     if (round.isWhiteTurn()) {
-        if (castling.WhiteKing) {
-            addChess960CastlingMove(moves, kings.white, castlingRooks.WhiteKing, WHITE_KING_CASTLING_MOVE);
+        if (castling.whiteKing) {
+            addChess960CastlingMove(moves, kings.white, castlingRooks.whiteKing, WHITE_KING_CASTLING_MOVE);
         }
-        if (castling.WhiteQueen) {
-            addChess960CastlingMove(moves, kings.white, castlingRooks.WhiteQueen, WHITE_QUEEN_CASTLING_MOVE);
+        if (castling.whiteQueen) {
+            addChess960CastlingMove(moves, kings.white, castlingRooks.whiteQueen, WHITE_QUEEN_CASTLING_MOVE);
         }
     } else {
-        if (castling.BlackKing) {
-            addChess960CastlingMove(moves, kings.black, castlingRooks.BlackKing, BLACK_KING_CASTLING_MOVE);
+        if (castling.blackKing) {
+            addChess960CastlingMove(moves, kings.black, castlingRooks.blackKing, BLACK_KING_CASTLING_MOVE);
         }
-        if (castling.BlackQueen) {
-            addChess960CastlingMove(moves, kings.black, castlingRooks.BlackQueen, BLACK_QUEEN_CASTLING_MOVE);
+        if (castling.blackQueen) {
+            addChess960CastlingMove(moves, kings.black, castlingRooks.blackQueen, BLACK_QUEEN_CASTLING_MOVE);
         }
     }
 }
@@ -2560,17 +2560,17 @@ void Engine::addStandardCastlingMoves(Moves& moves, const Round& round) {
     const auto& castling = round.castling;
 
     if (round.isWhiteTurn()) {
-        if (castling.WhiteKing) {
+        if (castling.whiteKing) {
             addStandardCastlingMove(moves, kings.white, WHITE_KING_CASTLING_MOVE);
         }
-        if (castling.WhiteQueen) {
+        if (castling.whiteQueen) {
             addStandardCastlingMove(moves, kings.white, WHITE_QUEEN_CASTLING_MOVE);
         }
     } else {
-        if (castling.BlackKing) {
+        if (castling.blackKing) {
             addStandardCastlingMove(moves, kings.black, BLACK_KING_CASTLING_MOVE);
         }
-        if (castling.BlackQueen) {
+        if (castling.blackQueen) {
             addStandardCastlingMove(moves, kings.black, BLACK_QUEEN_CASTLING_MOVE);
         }
     }

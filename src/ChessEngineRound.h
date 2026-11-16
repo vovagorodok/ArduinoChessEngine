@@ -5,12 +5,11 @@ namespace ChessEngine {
 using HalfMove = uint16_t;
 using FullMove = uint16_t;
 
-// TODO: Change to lower case
 struct CastlingAbilities {
-    bool WhiteKing: 1;
-    bool WhiteQueen: 1;
-    bool BlackKing: 1;
-    bool BlackQueen: 1;
+    bool whiteKing: 1;
+    bool whiteQueen: 1;
+    bool blackKing: 1;
+    bool blackQueen: 1;
 };
 
 struct MaterialWeights {

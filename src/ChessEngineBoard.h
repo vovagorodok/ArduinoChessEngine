@@ -13,11 +13,10 @@ struct Kings {
     Position check;
 };
 
-// TODO: Change to lower case
 struct CastlingRooks {
-    Position WhiteKing;
-    Position WhiteQueen;
-    Position BlackKing;
-    Position BlackQueen;
+    Position whiteKing;
+    Position whiteQueen;
+    Position blackKing;
+    Position blackQueen;
 };
 }
