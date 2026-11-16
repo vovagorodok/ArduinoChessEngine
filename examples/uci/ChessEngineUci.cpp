@@ -59,15 +59,24 @@ void Uci::handleUci() {
     CHESS_ENGINE_PRINTF("id name ArduinoChessEngine\n");
     CHESS_ENGINE_PRINTF("id author vovagorodok, dkwach\n");
     CHESS_ENGINE_PRINTF("option name Level type spin default 7 min 0 max 7\n");
+    CHESS_ENGINE_PRINTF("option name Variant type combo default standard var standard var chess960\n");
     CHESS_ENGINE_PRINTF("uciok\n");
 }
 
 void Uci::handleSetOption(const String& input) {
-    if (input.indexOf("setoption name Level value ") != 0) {
+    if (input.indexOf("setoption name Level value ") == 0) {
+        const size_t level = static_cast<size_t>(input.substring(27).toInt());
+        ArduinoChessEngine.setOptions(levels.get(level));
         return;
     }
-    const size_t level = static_cast<size_t>(input.substring(27).toInt());
-    ArduinoChessEngine.setOptions(levels.get(level));
+    if (input.indexOf("setoption name Variant value ") == 0) {
+        const String value = input.substring(29);
+        if (value == "standard") {
+            ArduinoChessEngine.setVariant(Variant::Standard);
+        } else if (value == "chess960") {
+            ArduinoChessEngine.setVariant(Variant::Chess960);
+        }
+    }
 }
 
 void Uci::handlePosition(const String& input) {

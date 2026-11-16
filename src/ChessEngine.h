@@ -6,6 +6,7 @@
 #include "ChessEngineSearch.h"
 #include "ChessEngineModes.h"
 #include "ChessEngineOptions.h"
+#include "ChessEngineVariant.h"
 #include "ChessEngineHistory.h"
 #include "ChessEngineSupervisor.h"
 #include "ChessEngineTask.h"
@@ -56,6 +57,8 @@ class Engine {
     bool isDraw() const;
     bool isEnd() const;
 
+    Variant getVariant() const;
+    void setVariant(Variant var);
     const Options& getOptions() const;
     void setOptions(const Options& opt);
     Milliseconds getTimeLimit() const;
@@ -77,6 +80,18 @@ class Engine {
     void applyMove(const Move& move);
     void updateRound();
 
+    Position findWhiteCastlingKing() const;
+    Position findBlackCastlingKing() const;
+    Position findWhiteKingCastlingOutermostRook() const;
+    Position findWhiteQueenCastlingOutermostRook() const;
+    Position findBlackKingCastlingOutermostRook() const;
+    Position findBlackQueenCastlingOutermostRook() const;
+
+    char createChess960CastlingAbilitiesChar(Position rookPos, Position outermostPos, char ch) const;
+    bool applyChess960CastlingAbilitiesChar(char ch);
+    bool applyStandardCastlingAbilitiesChar(char ch);
+    bool applyCastlingAbilitiesChar(char ch);
+
     bool isAutoPromotionNeeded(const Move& move) const;
     bool isWhiteKingInSlidingCheck() const;
     bool isBlackKingInSlidingCheck() const;
@@ -93,6 +108,10 @@ class Engine {
     void setRoundWeights(Round& round) const;
     void setRoundPhase(Round& round) const;
 
+    void diveWhiteChess960Castling(CastlingAbilities& castling, const Move& move) const;
+    void diveWhiteStandardCastling(CastlingAbilities& castling, const Move& move) const;
+    void diveBlackChess960Castling(CastlingAbilities& castling, const Move& move) const;
+    void diveBlackStandardCastling(CastlingAbilities& castling, const Move& move) const;
     void diveWhiteCastling(CastlingAbilities& castling, const Move& move) const;
     void diveBlackCastling(CastlingAbilities& castling, const Move& move) const;
     void diveWhiteEnPassant(Position& enPassant, const Move& move) const;
@@ -105,15 +124,19 @@ class Engine {
 
     void redoMove(const Move& move);
     void redoNormalMove(Position& kingPos, Piece srcKing, const Move& move);
+    void redoChess960CastlingMove(Position& kingPos, const CastlingMove& castle, const Move& move);
+    void redoStandardCastlingMove(Position& kingPos, const CastlingMove& castle);
+    void redoCastlingMove(Position& kingPos, const CastlingMove& castle, const Move& move);
     void redoEnPassantMove(const EnPassantDstToEnPassantRemovesMap& map, const Move& move);
-    void redoCastlingMove(Position& kingPos, const CastlingMove& castle);
     void redoPromoMove(Piece promPiece, const Move& move);
     void redoBoard(const Round& round, const Move& move);
 
     void undoMove(const Move& move);
     void undoNormalMove(Position& kingPos, Piece srcKing, const Move& move);
+    void undoChess960CastlingMove(Position& kingPos, const CastlingMove& castle, const Move& move);
+    void undoStandardCastlingMove(Position& kingPos, const CastlingMove& castle);
+    void undoCastlingMove(Position& kingPos, const CastlingMove& castle, const Move& move);
     void undoEnPassantMove(const EnPassantDstToEnPassantRemovesMap& map, Piece beatPawn, const Move& move);
-    void undoCastlingMove(Position& kingPos, const CastlingMove& castle);
     void undoPromoMove(const Move& move);
     void undoBoard(const Round& round, const Move& move);
 
@@ -124,11 +147,14 @@ class Engine {
     void addRookMoves(Moves& moves, Position src) const;
     void addBishopMoves(Moves& moves, Position src) const;
     void addQueenMoves(Moves& moves, Position src) const;
+    void addChess960CastlingMove(Moves& moves, Position& kingPos, Position rookSrc, const CastlingMove& castle);
+    void addStandardCastlingMove(Moves& moves, Position& kingPos, const CastlingMove& castle);
+    void addChess960CastlingMoves(Moves& moves, const Round& round);
+    void addStandardCastlingMoves(Moves& moves, const Round& round);
+    void addCastlingMoves(Moves& moves, const Round& round);
     void addEnPassantMoves(Moves& moves, const Round& round, const EnPassantRemoves& removes, Piece srcPawn,
                            Piece beatPawn) const;
     void addEnPassantMoves(Moves& moves, const Round& round) const;
-    void addCastlingMove(Moves& moves, Position& kingPos, const CastlingMove& castle);
-    void addCastlingMoves(Moves& moves, const Round& round);
     void addMoves(Moves& moves, const Round& round);
 #ifdef CHESS_ENGINE_MULTI_TASK
     void addMultiTaskMoves(Moves& moves, const Round& round, Depth depth);
@@ -168,13 +194,15 @@ class Engine {
     Round& rootRound;
     Round& rootNextRound;
     Board board;
-    KingPositions kingPositions;
+    KingPositions kingPositions; // TODO: Rename to kings?
+    CastlingRooks castlingRooks;
     Move lastMove;
 
     Moves moves;
     Moves bestMoves;
 
     Modes modes;
+    Variant variant;
     Options options;
 
     Depth maxReachedDepth;

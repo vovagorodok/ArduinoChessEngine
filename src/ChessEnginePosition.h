@@ -24,11 +24,10 @@ class Position {
         }
         const char file = str[0];
         const char rank = str[1];
-        if (!isSquareFileChar(file) || !isSquareNumberChar(rank)) {
+        if (!isSquareFileChar(file) || !isSquareRankChar(rank)) {
             return Position::none();
         }
-        return convertCharToSquareFile(file) +
-               BOARD_SQUARES_NUM * (BOARD_SQUARES_NUM - convertCharToSquareNumber(rank));
+        return convertCharToSquareFile(file) + BOARD_SQUARES_NUM * (BOARD_SQUARES_NUM - convertCharToSquareRank(rank));
     }
 
     String toStr() const {
@@ -36,8 +35,11 @@ class Position {
             return "_";
         }
         return String(convertSquareFileToChar(value % BOARD_SQUARES_NUM)) +
-               convertSquareNumberToChar(BOARD_SQUARES_NUM - value / BOARD_SQUARES_NUM);
+               convertSquareRankToChar(BOARD_SQUARES_NUM - value / BOARD_SQUARES_NUM);
     }
+
+    ValueType toSquareFile() const { return value % BOARD_SQUARES_NUM; }
+    ValueType toSquareRank() const { return value / BOARD_SQUARES_NUM; }
 
     Position& operator++() {
         value++;

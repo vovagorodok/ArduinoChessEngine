@@ -12,4 +12,12 @@ struct KingPositions {
     Position black;
     Position check;
 };
+
+// TODO: Change to lower case
+struct CastlingRooks {
+    Position WhiteKing;
+    Position WhiteQueen;
+    Position BlackKing;
+    Position BlackQueen;
+};
 }

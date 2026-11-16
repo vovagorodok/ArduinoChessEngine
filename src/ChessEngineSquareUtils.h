@@ -14,15 +14,15 @@ inline char convertSquareFileToChar(uint8_t file) {
     return 'a' + file;
 }
 
-inline bool isSquareNumberChar(char ch) {
+inline bool isSquareRankChar(char ch) {
     return ch >= '1' && ch <= '8';
 }
 
-inline uint8_t convertCharToSquareNumber(char ch) {
+inline uint8_t convertCharToSquareRank(char ch) {
     return ch - '0';
 }
 
-inline char convertSquareNumberToChar(uint8_t number) {
-    return '0' + number;
+inline char convertSquareRankToChar(uint8_t rank) {
+    return '0' + rank;
 }
 }

@@ -4,9 +4,9 @@
 namespace ChessEngine {
 enum class MoveType : uint8_t {
     Normal,
-    EnPassant,
     CastleKing,
     CastleQueen,
+    EnPassant,
     PromoKnight,
     PromoBishop,
     PromoRook,
