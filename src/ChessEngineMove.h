@@ -38,7 +38,7 @@ struct Move {
             return Move::none();
         }
         Move move{};
-        move.positions = convertStrToPositions(uci);
+        move.positions = convertStringToPositions(uci);
         move.type = MoveType::Normal;
         if (uci.length() > 4) {
             move.type = convertPieceKindToMoveType(convertCharToPieceKind(uci[4]));
@@ -50,7 +50,7 @@ struct Move {
     }
 
     String toUci() const {
-        String str = convertPositionsToStr(positions);
+        String str = convertPositionsToString(positions);
         if (isPromotion()) {
             str += convertPieceKindToChar(convertMoveTypeToPieceKind(type));
         }

@@ -354,11 +354,11 @@ void Wac::begin() {
             solvedEpdCount++;
         }
         scoreCount += calcScore(resultCounts);
-        CHESS_ENGINE_PRINTF("EPD: time: %s, count: %d/%d, score: %d, ", convertMillisecondsToStr(timer.value()).c_str(),
-                            solvedEpdCount, epdCount, scoreCount);
+        CHESS_ENGINE_PRINTF("EPD: time: %s, count: %d/%d, score: %d, ",
+                            convertMillisecondsToString(timer.value()).c_str(), solvedEpdCount, epdCount, scoreCount);
         printMoves(expectedMoves, solvedMoves);
     }
-    CHESS_ENGINE_PRINTF("WAC:  time: %s, count: %d/%d, score: %d\n", convertMillisecondsToStr(timer.value()).c_str(),
+    CHESS_ENGINE_PRINTF("WAC:  time: %s, count: %d/%d, score: %d\n", convertMillisecondsToString(timer.value()).c_str(),
                         solvedEpdCount, epdCount, scoreCount);
 }
 
@@ -371,7 +371,7 @@ void Wac::begin(const String& epd) {
     timer.begin();
 
     const bool isSolved = solve(epd).matched;
-    CHESS_ENGINE_PRINTF("EPD: time: %s, solved: %d, ", convertMillisecondsToStr(timer.value()).c_str(), isSolved);
+    CHESS_ENGINE_PRINTF("EPD: time: %s, solved: %d, ", convertMillisecondsToString(timer.value()).c_str(), isSolved);
     printMoves(expectedMoves, solvedMoves);
 }
 

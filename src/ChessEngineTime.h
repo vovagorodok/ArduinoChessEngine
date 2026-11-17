@@ -20,7 +20,7 @@ inline Milliseconds convertSecondsToMilliseconds(Seconds seconds) {
     return seconds * MILLISECONDS_IN_SECOND;
 }
 
-inline String convertSecondsToStr(Seconds seconds) {
+inline String convertSecondsToString(Seconds seconds) {
     static char buf[14];
     const auto hr = seconds / SECONDS_IN_HOUR;
     const auto min = (seconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE;
@@ -29,7 +29,7 @@ inline String convertSecondsToStr(Seconds seconds) {
     return String(buf);
 }
 
-inline String convertMillisecondsToStr(Milliseconds milliseconds) {
-    return convertSecondsToStr(convertMillisecondsToSeconds(milliseconds));
+inline String convertMillisecondsToString(Milliseconds milliseconds) {
+    return convertSecondsToString(convertMillisecondsToSeconds(milliseconds));
 }
 }

@@ -18,7 +18,7 @@ class Position {
     constexpr bool isNone() const { return value == NONE_VALUE; }
     constexpr operator ValueType() const { return value; }
 
-    static Position fromStr(const String& str) {
+    static Position fromString(const String& str) {
         if (str.length() < 2) {
             return Position::none();
         }
@@ -30,7 +30,7 @@ class Position {
         return convertCharToSquareFile(file) + BOARD_SQUARES_NUM * (BOARD_SQUARES_NUM - convertCharToSquareRank(rank));
     }
 
-    String toStr() const {
+    String toString() const {
         if (isNone()) {
             return "_";
         }
@@ -68,11 +68,11 @@ class Position {
     ValueType value;
 };
 
-inline Position convertStrToPosition(const String& str) {
-    return Position::fromStr(str);
+inline Position convertStringToPosition(const String& str) {
+    return Position::fromString(str);
 }
 
-inline String convertPositionToStr(Position pos) {
-    return pos.toStr();
+inline String convertPositionToString(Position pos) {
+    return pos.toString();
 }
 }

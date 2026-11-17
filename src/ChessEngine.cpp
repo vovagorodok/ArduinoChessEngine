@@ -956,7 +956,7 @@ uint16_t convertCharToMultiNumber(char ch, uint16_t number) {
     return number ? number * 10 + value : value;
 }
 
-String convertMultiNumberToStr(uint16_t number) {
+String convertMultiNumberToString(uint16_t number) {
     return String(number);
 }
 
@@ -1342,7 +1342,7 @@ const Moves& Engine::solveMoves() {
         sortMoves(rootMoves);
 
         CHESS_ENGINE_LOG(TAG, "Solved: move: %s, time: %s, depth: %d/%d, weight: %d, nodes: %lu",
-                         convertMoveToUci(best).c_str(), convertMillisecondsToStr(supervisor.getTime()).c_str(),
+                         convertMoveToUci(best).c_str(), convertMillisecondsToString(supervisor.getTime()).c_str(),
                          depthTarget, maxReachedDepth, best.weight, supervisor.getNodesCount());
 
         if (isMateWeight(weight)) {
@@ -1400,8 +1400,7 @@ const Moves& Engine::createMoves(Position src) {
 }
 
 const Moves& Engine::createMoves(const String& srcUci) {
-    const Position src = convertStrToPosition(srcUci);
-    return createMoves(src);
+    return createMoves(Position::fromString(srcUci));
 }
 
 String Engine::createFen() const {
@@ -1433,21 +1432,21 @@ String Engine::createFen() const {
     fen += convertPieceColorToChar(rootRound.turn);
 
     fen += ' ';
-    addCastlingAbilitiesStr(fen);
+    addCastlingAbilitiesString(fen);
 
     fen += ' ';
     const auto& enPassant = rootRound.enPassant;
     if (!enPassant.isNone()) {
-        fen += convertPositionToStr(enPassant);
+        fen += convertPositionToString(enPassant);
     } else {
         fen += '-';
     }
 
     fen += ' ';
-    fen += convertMultiNumberToStr(rootRound.halfMove);
+    fen += convertMultiNumberToString(rootRound.halfMove);
 
     fen += ' ';
-    fen += convertMultiNumberToStr(rootRound.fullMove);
+    fen += convertMultiNumberToString(rootRound.fullMove);
 
     return fen;
 }
@@ -1503,7 +1502,7 @@ bool Engine::applyFen(const String& fen) {
             }
         } else if (field == 3) {
             if (ch != '-') {
-                rootRound.enPassant = convertStrToPosition(fen.substring(i, i + 2));
+                rootRound.enPassant = convertStringToPosition(fen.substring(i, i + 2));
                 if (rootRound.enPassant.isNone()) {
                     return false;
                 }
@@ -1639,7 +1638,7 @@ void Engine::addChess960CastlingAbilitiesChar(String& fen, Position rookPos, Pos
     ch += isupper(ch) ? toupper(file) : file;
 }
 
-void Engine::addChess960CastlingAbilitiesStr(String& fen) const {
+void Engine::addChess960CastlingAbilitiesString(String& fen) const {
     const auto& castling = rootRound.castling;
 
     if (castling.whiteKing) {
@@ -1656,7 +1655,7 @@ void Engine::addChess960CastlingAbilitiesStr(String& fen) const {
     }
 }
 
-void Engine::addStandardCastlingAbilitiesStr(String& fen) const {
+void Engine::addStandardCastlingAbilitiesString(String& fen) const {
     const auto& castling = rootRound.castling;
 
     if (castling.whiteKing) {
@@ -1673,14 +1672,14 @@ void Engine::addStandardCastlingAbilitiesStr(String& fen) const {
     }
 }
 
-void Engine::addCastlingAbilitiesStr(String& fen) const {
+void Engine::addCastlingAbilitiesString(String& fen) const {
     const auto& castling = rootRound.castling;
 
     if (castling.whiteKing or castling.whiteQueen or castling.blackKing or castling.blackQueen) {
         if (variant == Variant::Chess960) {
-            addChess960CastlingAbilitiesStr(fen);
+            addChess960CastlingAbilitiesString(fen);
         } else {
-            addStandardCastlingAbilitiesStr(fen);
+            addStandardCastlingAbilitiesString(fen);
         }
     } else {
         fen += '-';

@@ -7,15 +7,15 @@ struct Positions {
     Position dst;
 };
 
-inline String convertPositionsToStr(Positions positions) {
-    return convertPositionToStr(positions.src) + convertPositionToStr(positions.dst);
+inline String convertPositionsToString(Positions positions) {
+    return convertPositionToString(positions.src) + convertPositionToString(positions.dst);
 }
 
-inline Positions convertStrToPositions(const String& str) {
+inline Positions convertStringToPositions(const String& str) {
     if (str.length() < 4) {
         return {};
     }
-    return {convertStrToPosition(str.substring(0, 2)), convertStrToPosition(str.substring(2, 4))};
+    return {convertStringToPosition(str.substring(0, 2)), convertStringToPosition(str.substring(2, 4))};
 }
 
 constexpr bool operator==(Positions a, Positions b) {

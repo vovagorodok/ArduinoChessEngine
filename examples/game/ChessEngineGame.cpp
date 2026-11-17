@@ -36,7 +36,8 @@ void Game::begin() {
             } else if (input.indexOf("time") == 0) {
                 Seconds time = input.length() > 4 ? input.substring(5).toInt() : 60;
                 ArduinoChessEngine.setTimeLimit(convertSecondsToMilliseconds(time));
-                CHESS_ENGINE_PRINTF("Time: %s\n", convertMillisecondsToStr(ArduinoChessEngine.getTimeLimit()).c_str());
+                CHESS_ENGINE_PRINTF("Time: %s\n",
+                                    convertMillisecondsToString(ArduinoChessEngine.getTimeLimit()).c_str());
             } else if (input.indexOf("side") == 0) {
                 if (input.length() == 6) {
                     side = convertCharToPieceColor(input.charAt(5));
@@ -45,7 +46,7 @@ void Game::begin() {
             } else if (input.length() == 2) {
                 CHESS_ENGINE_PRINTF("Destinations: ");
                 for (const Move& move : ArduinoChessEngine.createMoves(input)) {
-                    CHESS_ENGINE_PRINTF(convertPositionToStr(move.positions.dst).c_str());
+                    CHESS_ENGINE_PRINTF(convertPositionToString(move.positions.dst).c_str());
                     CHESS_ENGINE_PRINTF(" ");
                 }
                 CHESS_ENGINE_PRINTF("\n");
