@@ -30,6 +30,9 @@ isStopped	KEYWORD2
 isInvalid	KEYWORD2
 isDraw	KEYWORD2
 isEnd	KEYWORD2
+isVariantSupported	KEYWORD2
+getVariant	KEYWORD2
+setVariant	KEYWORD2
 getOptions	KEYWORD2
 setOptions	KEYWORD2
 getTimeLimit	KEYWORD2

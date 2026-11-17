@@ -8,7 +8,7 @@ namespace ChessEngine {
 class Levels {
  public:
     // clang-format off
-    Levels() :
+    constexpr Levels() :
         levels{
         /* 0 */ Options{
             RandomOption::On,

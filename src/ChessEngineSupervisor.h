@@ -14,7 +14,7 @@ class CyclicPull {
 
 class Supervisor {
  public:
-    Supervisor(const Options& options) :
+    constexpr Supervisor(const Options& options) :
         options(options),
         stopped(),
         nodesCount(),
