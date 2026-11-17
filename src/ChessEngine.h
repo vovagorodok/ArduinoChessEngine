@@ -9,16 +9,11 @@
 #include "ChessEngineVariant.h"
 #include "ChessEngineHistory.h"
 #include "ChessEngineSupervisor.h"
+#include "ChessEngineQuiescenceType.h"
 #include "ChessEngineTask.h"
 #include "ChessEngineTime.h"
 
 namespace ChessEngine {
-enum class QuiescenceType : uint8_t {
-    Skip,
-    MaybeOpponentInCheck,
-    Tactical
-};
-
 class Engine {
  public:
     Engine();
