@@ -1433,49 +1433,14 @@ String Engine::createFen() const {
     fen += convertPieceColorToChar(rootRound.turn);
 
     fen += ' ';
-    const auto& castling = rootRound.castling;
-    if (castling.whiteKing or castling.whiteQueen or castling.blackKing or castling.blackQueen) {
-        if (variant == Variant::Chess960) {
-            if (castling.whiteKing) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.whiteKing,
-                                                           findWhiteKingCastlingOutermostRook(), 'K');
-            }
-            if (castling.whiteQueen) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.whiteQueen,
-                                                           findWhiteQueenCastlingOutermostRook(), 'Q');
-            }
-            if (castling.blackKing) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.blackKing,
-                                                           findBlackKingCastlingOutermostRook(), 'k');
-            }
-            if (castling.blackQueen) {
-                fen += createChess960CastlingAbilitiesChar(castlingRooks.blackQueen,
-                                                           findBlackQueenCastlingOutermostRook(), 'q');
-            }
-        } else {
-            if (castling.whiteKing) {
-                fen += "K";
-            }
-            if (castling.whiteQueen) {
-                fen += "Q";
-            }
-            if (castling.blackKing) {
-                fen += "k";
-            }
-            if (castling.blackQueen) {
-                fen += "q";
-            }
-        }
-    } else {
-        fen += "-";
-    }
+    addCastlingAbilitiesStr(fen);
 
     fen += ' ';
     const auto& enPassant = rootRound.enPassant;
     if (!enPassant.isNone()) {
         fen += convertPositionToStr(enPassant);
     } else {
-        fen += "-";
+        fen += '-';
     }
 
     fen += ' ';
@@ -1665,12 +1630,61 @@ Position Engine::findBlackQueenCastlingOutermostRook() const {
     return Position::none();
 }
 
-char Engine::createChess960CastlingAbilitiesChar(Position rookPos, Position outermostPos, char ch) const {
+void Engine::addChess960CastlingAbilitiesChar(String& fen, Position rookPos, Position outermostPos, char ch) const {
     if (rookPos.isNone() || rookPos == outermostPos) {
-        return ch;
+        fen += ch;
+        return;
     }
     const char file = convertSquareFileToChar(rookPos.toSquareFile());
-    return isupper(ch) ? toupper(file) : file;
+    ch += isupper(ch) ? toupper(file) : file;
+}
+
+void Engine::addChess960CastlingAbilitiesStr(String& fen) const {
+    const auto& castling = rootRound.castling;
+
+    if (castling.whiteKing) {
+        addChess960CastlingAbilitiesChar(fen, castlingRooks.whiteKing, findWhiteKingCastlingOutermostRook(), 'K');
+    }
+    if (castling.whiteQueen) {
+        addChess960CastlingAbilitiesChar(fen, castlingRooks.whiteQueen, findWhiteQueenCastlingOutermostRook(), 'Q');
+    }
+    if (castling.blackKing) {
+        addChess960CastlingAbilitiesChar(fen, castlingRooks.blackKing, findBlackKingCastlingOutermostRook(), 'k');
+    }
+    if (castling.blackQueen) {
+        addChess960CastlingAbilitiesChar(fen, castlingRooks.blackQueen, findBlackQueenCastlingOutermostRook(), 'q');
+    }
+}
+
+void Engine::addStandardCastlingAbilitiesStr(String& fen) const {
+    const auto& castling = rootRound.castling;
+
+    if (castling.whiteKing) {
+        fen += 'K';
+    }
+    if (castling.whiteQueen) {
+        fen += 'Q';
+    }
+    if (castling.blackKing) {
+        fen += 'k';
+    }
+    if (castling.blackQueen) {
+        fen += 'q';
+    }
+}
+
+void Engine::addCastlingAbilitiesStr(String& fen) const {
+    const auto& castling = rootRound.castling;
+
+    if (castling.whiteKing or castling.whiteQueen or castling.blackKing or castling.blackQueen) {
+        if (variant == Variant::Chess960) {
+            addChess960CastlingAbilitiesStr(fen);
+        } else {
+            addStandardCastlingAbilitiesStr(fen);
+        }
+    } else {
+        fen += '-';
+    }
 }
 
 // X-Fen: https://chessprogramming.org/Forsyth-Edwards_Notation

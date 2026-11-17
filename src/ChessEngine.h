@@ -88,7 +88,10 @@ class Engine {
     Position findBlackKingCastlingOutermostRook() const;
     Position findBlackQueenCastlingOutermostRook() const;
 
-    char createChess960CastlingAbilitiesChar(Position rookPos, Position outermostPos, char ch) const;
+    void addChess960CastlingAbilitiesChar(String& fen, Position rookPos, Position outermostPos, char ch) const;
+    void addChess960CastlingAbilitiesStr(String& fen) const;
+    void addStandardCastlingAbilitiesStr(String& fen) const;
+    void addCastlingAbilitiesStr(String& fen) const;
     bool applyChess960CastlingAbilitiesChar(char ch);
     bool applyStandardCastlingAbilitiesChar(char ch);
     bool applyCastlingAbilitiesChar(char ch);
