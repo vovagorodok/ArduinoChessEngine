@@ -39,7 +39,7 @@ class Levels {
             NullMoveOption::Off,
             FutilityOption::Off,
             LazyEvalOption::Off,
-            QuiescenceOption::On,
+            QuiescenceOption::Off,
             AspirationOption::Off,
             ExtraDepthOption::Off,
             MinDepthOption::max(),
