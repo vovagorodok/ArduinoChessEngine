@@ -2692,11 +2692,6 @@ void Engine::addMultiTaskMoves(Moves& moves, const Round& round, Depth depth) {
             case PieceKind::Queen:
                 addQueenMoves(moves, src);
                 break;
-            case PieceKind::King:
-                if (round.phase == RoundPhase::Late) {
-                    addKingMoves(moves, src);
-                }
-                break;
             default:
                 break;
         }
@@ -2723,9 +2718,7 @@ void Engine::addTaskMoves(Depth depth) {
                 addPawnMoves(task.moves, src);
                 break;
             case PieceKind::King:
-                if (round.phase == RoundPhase::Early) {
-                    addKingMoves(task.moves, src);
-                }
+                addKingMoves(task.moves, src);
                 break;
             default:
                 break;
