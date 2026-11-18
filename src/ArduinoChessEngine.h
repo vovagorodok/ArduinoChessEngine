@@ -36,6 +36,7 @@ using ChessEngineLazyEvalOption = ChessEngine::LazyEvalOption;
 using ChessEngineQuiescenceOption = ChessEngine::QuiescenceOption;
 using ChessEngineAspirationOption = ChessEngine::AspirationOption;
 using ChessEngineExtraDepthOption = ChessEngine::ExtraDepthOption;
+using ChessEngineMinDepthOption = ChessEngine::MinDepthOption;
 using ChessEngineMaxDepthOption = ChessEngine::MaxDepthOption;
 using ChessEngineTimeLimitOption = ChessEngine::TimeLimitOption;
 
