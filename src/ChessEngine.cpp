@@ -1281,7 +1281,7 @@ const Moves& Engine::solveMoves() {
     }
 
     // Iterative Deepening: https://chessprogramming.org/Iterative_Deepening
-    for (Depth depthTarget = NEGAMAX_MIN_DEPTH; depthTarget <= options.maxDepth; depthTarget++) {
+    for (Depth depthTarget = options.minDepth; depthTarget <= options.maxDepth; depthTarget++) {
         maxReachedDepth = depthTarget;
 
         for (Move& move : rootMoves) {

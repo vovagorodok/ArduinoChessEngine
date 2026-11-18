@@ -38,7 +38,8 @@ using LazyEvalOption = BoolOption<struct LazyEvalOptionTag>;
 using QuiescenceOption = BoolOption<struct QuiescenceOptionTag>;
 using AspirationOption = BoolOption<struct AspirationOptionTag>;
 using ExtraDepthOption = BoolOption<struct ExtraDepthOptionTag>;
-using MaxDepthOption = IntOption<Depth, NEGAMAX_MIN_DEPTH, NEGAMAX_MAX_DEPTH>;
+using MinDepthOption = IntOption<Depth, 1, NEGAMAX_MIN_DEPTH>;
+using MaxDepthOption = IntOption<Depth, 1, NEGAMAX_MAX_DEPTH>;
 using TimeLimitOption = IntOption<Milliseconds, MIN_TIME_LIMIT, MAX_TIME_LIMIT>;
 
 struct Options {
@@ -49,13 +50,14 @@ struct Options {
     QuiescenceOption quiescence = QuiescenceOption::On;
     AspirationOption aspiration = AspirationOption::On;
     ExtraDepthOption extraDepth = ExtraDepthOption::On;
+    MinDepthOption minDepth = MinDepthOption::max();
     MaxDepthOption maxDepth = MaxDepthOption::max();
     TimeLimitOption timeLimit = TimeLimitOption::max();
 
     constexpr Options() = default;
     constexpr Options(RandomOption random, NullMoveOption nullMove, FutilityOption futility, LazyEvalOption lazyEval,
                       QuiescenceOption quiescence, AspirationOption aspiration, ExtraDepthOption extraDepth,
-                      MaxDepthOption maxDepth, TimeLimitOption timeLimit) :
+                      MaxDepthOption minDepth, MaxDepthOption maxDepth, TimeLimitOption timeLimit) :
         random(random),
         nullMove(nullMove),
         futility(futility),
@@ -63,6 +65,7 @@ struct Options {
         quiescence(quiescence),
         aspiration(aspiration),
         extraDepth(extraDepth),
+        minDepth(minDepth),
         maxDepth(maxDepth),
         timeLimit(timeLimit) {}
 };

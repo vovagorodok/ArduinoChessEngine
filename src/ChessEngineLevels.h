@@ -18,7 +18,8 @@ class Levels {
             QuiescenceOption::Off,
             AspirationOption::Off,
             ExtraDepthOption::Off,
-            MaxDepthOption::min(),
+            MinDepthOption::min(),
+            MinDepthOption::min(),
             TimeLimitOption::min()
         },
         /* 1 */ Options{
@@ -29,7 +30,8 @@ class Levels {
             QuiescenceOption::Off,
             AspirationOption::Off,
             ExtraDepthOption::Off,
-            MaxDepthOption::min(),
+            MinDepthOption::min(),
+            MinDepthOption::min(),
             TimeLimitOption::min()
         },
         /* 2 */ Options{
@@ -40,7 +42,8 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::Off,
             ExtraDepthOption::Off,
-            MaxDepthOption::min(),
+            MinDepthOption::max(),
+            MinDepthOption::max(),
             TimeLimitOption::min()
         },
         /* 3 */ Options{
@@ -51,7 +54,8 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::On,
             ExtraDepthOption::On,
-            MaxDepthOption::min(),
+            MinDepthOption::max(),
+            MinDepthOption::max(),
             TimeLimitOption::min()
         },
         /* 4 */ Options{
@@ -62,7 +66,8 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::On,
             ExtraDepthOption::On,
-            MaxDepthOption::min() + 1 * (MaxDepthOption::max() - MaxDepthOption::min()) / 4,
+            MinDepthOption::max(),
+            MinDepthOption::max() + 1 * (MaxDepthOption::max() - MinDepthOption::max()) / 4,
             TimeLimitOption::min() + 1 * (TimeLimitOption::max() - TimeLimitOption::min()) / 4,
         },
         /* 5 */ Options{
@@ -73,7 +78,8 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::On,
             ExtraDepthOption::On,
-            MaxDepthOption::min() + 2 * (MaxDepthOption::max() - MaxDepthOption::min()) / 4,
+            MinDepthOption::max(),
+            MinDepthOption::max() + 2 * (MaxDepthOption::max() - MinDepthOption::max()) / 4,
             TimeLimitOption::min() + 2 * (TimeLimitOption::max() - TimeLimitOption::min()) / 4,
         },
         /* 6 */ Options{
@@ -84,7 +90,8 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::On,
             ExtraDepthOption::On,
-            MaxDepthOption::min() + 3 * (MaxDepthOption::max() - MaxDepthOption::min()) / 4,
+            MinDepthOption::max(),
+            MinDepthOption::max() + 3 * (MaxDepthOption::max() - MinDepthOption::max()) / 4,
             TimeLimitOption::min() + 3 * (TimeLimitOption::max() - TimeLimitOption::min()) / 4,
         },
         /* 7 */ Options{
@@ -95,6 +102,7 @@ class Levels {
             QuiescenceOption::On,
             AspirationOption::On,
             ExtraDepthOption::On,
+            MinDepthOption::max(),
             MaxDepthOption::max(),
             TimeLimitOption::max()
         }
