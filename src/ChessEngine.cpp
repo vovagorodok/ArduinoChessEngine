@@ -3202,7 +3202,9 @@ Weight Engine::negamax(Depth depth, Weight alpha, Weight beta, Depth depthLeft) 
             modes.lazyEval = LazyEvalMode::Active;
             weight = -negamax(depth + 1, -beta, -reducedAlpha, depthLeft - 1 - LAZY_EVAL_REDUCED_DEPTHS);
             if (!supervisor.isStopped()) {
-                if (weight <= alpha) {
+                // Fail Low: https://chessprogramming.org/Fail-Low
+                const bool isFailLow = weight <= alpha;
+                if (isFailLow) {
                     weight = alpha;
                 } else {
                     modes.lazyEval = LazyEvalMode::Inactive;
