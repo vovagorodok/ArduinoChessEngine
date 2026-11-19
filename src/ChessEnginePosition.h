@@ -32,7 +32,7 @@ class Position {
 
     String toString() const {
         if (isNone()) {
-            return "_";
+            return "__";
         }
         return String(convertSquareFileToChar(value % BOARD_SQUARES_NUM)) +
                convertSquareRankToChar(BOARD_SQUARES_NUM - value / BOARD_SQUARES_NUM);

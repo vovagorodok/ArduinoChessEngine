@@ -62,6 +62,7 @@ void Game::begin() {
             const auto move = ArduinoChessEngine.make(ArduinoChessEngine.solve());
             if (move.isNone() && !ArduinoChessEngine.isEnd()) {
                 CHESS_ENGINE_PRINTF("Error!\n");
+                break;
             }
             CHESS_ENGINE_PRINTF("Moved: %s\n", convertMoveToUci(move).c_str());
         }
