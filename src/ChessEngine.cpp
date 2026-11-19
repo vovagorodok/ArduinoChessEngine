@@ -1310,6 +1310,7 @@ const Moves& Engine::solveMoves() {
             break;
         }
 
+        supervisor.enable();
         supervisor.updateTime();
         modes.boardEval = BoardEvalMode::Positional;
 

@@ -16,6 +16,7 @@ class Supervisor {
  public:
     constexpr Supervisor(const Options& options) :
         options(options),
+        enabled(),
         stopped(),
         nodesCount(),
         nextCheckNodesCount(),
@@ -27,6 +28,7 @@ class Supervisor {
         cyclicPull(&defaultCyclicPull) {}
 
     void begin() {
+        enabled = false;
         stopped = false;
         timer.begin();
         time = 0;
@@ -35,6 +37,7 @@ class Supervisor {
         nextPullTime = cyclicPullPeriod;
     }
 
+    void enable() { enabled = true; }
     void stop() { stopped = true; }
     bool isStopped() const { return stopped; }
 
@@ -58,12 +61,11 @@ class Supervisor {
     }
 
     bool checkTimeLimit() {
-        if (time > options.timeLimit) {
+        if (enabled && time > options.timeLimit) {
             stopped = true;
-            return stopped;
+        } else {
+            checkCyclicPull();
         }
-
-        checkCyclicPull();
         return stopped;
     }
 
@@ -85,6 +87,7 @@ class Supervisor {
 
     const Options& options;
 
+    bool enabled;
     bool stopped;
     NodesCount nodesCount;
     NodesCount nextCheckNodesCount;
