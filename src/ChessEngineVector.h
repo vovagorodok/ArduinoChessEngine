@@ -110,7 +110,17 @@ class Vector {
         count = other.count;
         return *this;
     }
-    bool operator==(const Vector& other) const { return count == other.count && array == other.array; }
+    bool operator==(const Vector& other) const {
+        if (count != other.count) {
+            return false;
+        }
+        for (size_t pos = 0; pos < other.count; pos++) {
+            if (array[pos] != other.array[pos]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     template <typename OtherT, size_t OtherN>
     friend class Vector;
